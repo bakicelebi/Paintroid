@@ -31,6 +31,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.DisplayMetrics
+import android.view.View
 import androidx.annotation.ColorRes
 import androidx.annotation.VisibleForTesting
 import androidx.test.espresso.idling.CountingIdlingResource
@@ -166,13 +167,6 @@ abstract class BaseToolWithRectangleShape(
     private var touchDownPositionX = 0f
     private var touchDownPositionY = 0f
 
-    enum class OptionsViewStates {
-        HIDDEN,
-        VISIBLE,
-    }
-
-    private var optionsViewState = OptionsViewStates.VISIBLE
-
     init {
         val orientation = contextCallback.orientation
         val boxSize =
@@ -256,28 +250,32 @@ abstract class BaseToolWithRectangleShape(
     }
 
     private fun hideToolSpecificLayout() {
-        if (optionsViewState == OptionsViewStates.VISIBLE) {
-            if (this !is TextTool) {
+        if (this !is TextTool) {
+            if (toolOptionsViewController.isVisible &&
+                toolOptionsViewController.toolSpecificOptionsLayout.visibility == View.VISIBLE) {
                 toolOptionsViewController.slideDown(
-                    toolOptionsViewController.toolSpecificOptionsLayout, true
+                    toolOptionsViewController.toolSpecificOptionsLayout,
+                    willHide = true,
+                    showOptionsView = false
                 )
             }
-            toolOptionsViewController.animateBottomAndTopNavigation(true)
-            optionsViewState = OptionsViewStates.HIDDEN
         }
+        toolOptionsViewController.animateBottomAndTopNavigation(true)
     }
 
-    private fun showToolSpecificLayout() {
-        if (optionsViewState == OptionsViewStates.HIDDEN) {
-            if (this !is TextTool) {
+
+     private fun showToolSpecificLayout() {
+        if (this !is TextTool) {
+            if (!toolOptionsViewController.isVisible &&
+                toolOptionsViewController.toolSpecificOptionsLayout.visibility == View.INVISIBLE) {
                 toolOptionsViewController.slideUp(
-                    toolOptionsViewController.toolSpecificOptionsLayout, false
+                    toolOptionsViewController.toolSpecificOptionsLayout,
+                    willHide = false,
+                    showOptionsView = true
                 )
             }
-
-            toolOptionsViewController.animateBottomAndTopNavigation(false)
-            optionsViewState = OptionsViewStates.VISIBLE
         }
+        toolOptionsViewController.animateBottomAndTopNavigation(false)
     }
 
     override fun handleDown(coordinate: PointF?): Boolean {

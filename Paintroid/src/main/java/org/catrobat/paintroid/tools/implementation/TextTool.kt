@@ -24,6 +24,7 @@ import android.graphics.PointF
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.annotation.VisibleForTesting
 import androidx.test.espresso.idling.CountingIdlingResource
 import org.catrobat.paintroid.R
@@ -109,8 +110,6 @@ class TextTool(
     private var oldBoxWidth = 0f
     private var oldBoxHeight = 0f
     private var oldToolPosition: PointF? = null
-
-    private var textToolOptionsViewState = OptionsViewStates.VISIBLE
 
     @get:VisibleForTesting
     val multilineText: Array<String>
@@ -207,20 +206,46 @@ class TextTool(
         updateTypeface()
     }
 
-    private fun hideTextToolLayout() {
-        if (textToolOptionsViewState == OptionsViewStates.VISIBLE) {
-            toolOptionsViewController.slideUp(textToolOptionsView.getTopLayout(), true)
-            toolOptionsViewController.slideDown(textToolOptionsView.getBottomLayout(), true)
-            textToolOptionsViewState = OptionsViewStates.HIDDEN
+    fun hideTextToolLayout() {
+        if (textToolOptionsView.getTopLayout().visibility == View.VISIBLE) {
+            toolOptionsViewController.slideUp(
+                textToolOptionsView.getTopLayout(),
+                willHide = true,
+                showOptionsView = false
+            )
+        }
+
+        if (textToolOptionsView.getBottomLayout().visibility == View.VISIBLE) {
+            toolOptionsViewController.slideDown(
+                textToolOptionsView.getBottomLayout(),
+                willHide = true,
+                showOptionsView = false
+            )
         }
     }
 
-    private fun showTextToolLayout() {
-        if (textToolOptionsViewState == OptionsViewStates.HIDDEN) {
-            toolOptionsViewController.slideDown(textToolOptionsView.getTopLayout(), false)
-            toolOptionsViewController.slideUp(textToolOptionsView.getBottomLayout(), false)
-            textToolOptionsViewState = OptionsViewStates.VISIBLE
-        }
+     fun showTextToolLayout() {
+         if (textToolOptionsView.getTopLayout().visibility == View.INVISIBLE) {
+             if(!toolOptionsViewController.isVisible) {
+                 toolOptionsViewController.show();
+             }
+             toolOptionsViewController.slideDown(
+                 textToolOptionsView.getTopLayout(),
+                 willHide = false,
+                 showOptionsView = true
+             )
+         }
+
+         if (textToolOptionsView.getBottomLayout().visibility == View.INVISIBLE) {
+             if(!toolOptionsViewController.isVisible) {
+                 toolOptionsViewController.show();
+             }
+             toolOptionsViewController.slideUp(
+                 textToolOptionsView.getBottomLayout(),
+                 willHide = false,
+                 showOptionsView = true
+             )
+         }
     }
 
     override fun handleMove(coordinate: PointF?): Boolean {
@@ -232,8 +257,8 @@ class TextTool(
     override fun handleUp(coordinate: PointF?): Boolean {
         coordinate?.let {
             if (abs(toolPosition.x - it.x) <= boxWidth / 2 && abs(toolPosition.y - it.y) <= boxHeight / 2) {
-                super.handleUp(coordinate)
                 showTextToolLayout()
+                super.handleUp(coordinate)
                 textToolOptionsView.showKeyboard()
             } else {
                 textToolOptionsView.hideKeyboard()
