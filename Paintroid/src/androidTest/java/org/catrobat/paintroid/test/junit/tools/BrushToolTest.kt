@@ -178,7 +178,6 @@ class BrushToolTest {
         Mockito.`when`(viewMock.visibility).thenReturn(View.VISIBLE)
         Mockito.`when`(brushToolOptionsView!!.getTopToolOptions()).thenReturn(viewMock)
         Mockito.`when`(brushToolOptionsView.getBottomToolOptions()).thenReturn(viewMock)
-        
         whenever(workspace!!.contains(any<PointF>())).thenReturn(true)
         whenever(toolPaint!!.paint).thenReturn(paint)
         val event1 = PointF(0f, 0f)
