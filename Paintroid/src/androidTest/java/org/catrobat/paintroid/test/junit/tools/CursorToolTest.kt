@@ -120,7 +120,6 @@ class CursorToolTest {
         Mockito.`when`(viewMock.visibility).thenReturn(View.VISIBLE)
         Mockito.`when`(brushToolOptionsView!!.getTopToolOptions()).thenReturn(viewMock)
         Mockito.`when`(brushToolOptionsView.getBottomToolOptions()).thenReturn(viewMock)
-        
         Mockito.`when`(workspace!!.contains(toolToTest!!.toolPosition)).thenReturn(true)
         val point = PointF(-5f, -5f)
         Assert.assertTrue(toolToTest!!.handleDown(point))
