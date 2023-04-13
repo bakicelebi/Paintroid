@@ -89,9 +89,7 @@ abstract class BaseTool(
         toolPaint.strokeCap = cap
     }
 
-    override fun handleDown(coordinate: PointF?): Boolean {
-        return true
-    }
+    override fun handleDown(coordinate: PointF?): Boolean = true
 
     override fun handleUp(coordinate: PointF?): Boolean {
         toolOptionsViewController.animateBottomAndTopNavigation(false)

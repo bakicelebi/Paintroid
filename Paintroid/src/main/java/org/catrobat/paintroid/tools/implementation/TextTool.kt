@@ -226,8 +226,8 @@ class TextTool(
 
      fun showTextToolLayout() {
          if (textToolOptionsView.getTopLayout().visibility == View.INVISIBLE) {
-             if(!toolOptionsViewController.isVisible) {
-                 toolOptionsViewController.show();
+             if (!toolOptionsViewController.isVisible) {
+                 toolOptionsViewController.show()
              }
              toolOptionsViewController.slideDown(
                  textToolOptionsView.getTopLayout(),
@@ -237,8 +237,8 @@ class TextTool(
          }
 
          if (textToolOptionsView.getBottomLayout().visibility == View.INVISIBLE) {
-             if(!toolOptionsViewController.isVisible) {
-                 toolOptionsViewController.show();
+             if (!toolOptionsViewController.isVisible) {
+                 toolOptionsViewController.show()
              }
              toolOptionsViewController.slideUp(
                  textToolOptionsView.getBottomLayout(),

@@ -250,30 +250,27 @@ abstract class BaseToolWithRectangleShape(
     }
 
     private fun hideToolSpecificLayout() {
-        if (this !is TextTool) {
-            if (toolOptionsViewController.isVisible &&
-                toolOptionsViewController.toolSpecificOptionsLayout.visibility == View.VISIBLE) {
-                toolOptionsViewController.slideDown(
-                    toolOptionsViewController.toolSpecificOptionsLayout,
-                    willHide = true,
-                    showOptionsView = false
-                )
-            }
+        if (this !is TextTool &&
+            toolOptionsViewController.isVisible &&
+            toolOptionsViewController.toolSpecificOptionsLayout.visibility == View.VISIBLE) {
+            toolOptionsViewController.slideDown(
+                toolOptionsViewController.toolSpecificOptionsLayout,
+                willHide = true,
+                showOptionsView = false
+            )
         }
         toolOptionsViewController.animateBottomAndTopNavigation(true)
     }
 
-
      private fun showToolSpecificLayout() {
-        if (this !is TextTool) {
-            if (!toolOptionsViewController.isVisible &&
-                toolOptionsViewController.toolSpecificOptionsLayout.visibility == View.INVISIBLE) {
-                toolOptionsViewController.slideUp(
-                    toolOptionsViewController.toolSpecificOptionsLayout,
-                    willHide = false,
-                    showOptionsView = true
-                )
-            }
+        if (this !is TextTool &&
+            !toolOptionsViewController.isVisible &&
+            toolOptionsViewController.toolSpecificOptionsLayout.visibility == View.INVISIBLE) {
+            toolOptionsViewController.slideUp(
+                toolOptionsViewController.toolSpecificOptionsLayout,
+                willHide = false,
+                showOptionsView = true
+            )
         }
         toolOptionsViewController.animateBottomAndTopNavigation(false)
     }

@@ -200,7 +200,6 @@ class LineTool(
                 )
             }
         }
-
     }
 
     private fun showToolOptions() {

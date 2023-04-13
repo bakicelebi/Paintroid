@@ -140,7 +140,7 @@ class DefaultToolOptionsViewController(
         hideButtonsEnabled = false
     }
 
-    override fun slideUp(view: View, willHide: Boolean, showOptionsView:Boolean) {
+    override fun slideUp(view: View, willHide: Boolean, showOptionsView: Boolean) {
         if (!enabled || !hideButtonsEnabled) {
             return
         }
@@ -177,7 +177,7 @@ class DefaultToolOptionsViewController(
         }
     }
 
-    override fun slideDown(view: View, willHide: Boolean, showOptionsView:Boolean) {
+    override fun slideDown(view: View, willHide: Boolean, showOptionsView: Boolean) {
         if (!enabled || !hideButtonsEnabled) {
             return
         }
